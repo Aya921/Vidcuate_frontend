@@ -2,8 +2,6 @@ import type { ApiResult } from "../../../../core/api/apiResult";
 import { demoStore, DEMO_USER_ID } from "../../../../core/mock/demo_store";
 import { mockDelay } from "../../../../core/mock/config";
 import type { AuthDataSource } from "../../data/data_source/auth_data_source";
-import type { ForgetPassReq } from "../../domain/entity/forgetpass_request";
-import type { ResetPasswordRequest } from "../../domain/entity/reset_password_request";
 import type { User } from "../../domain/entity/user";
 import type { LoginRequestDto } from "../models/login/login_request_dto";
 import type { LoginResponseDto } from "../models/login/login_response_dto";
@@ -26,6 +24,6 @@ export class MockAuthDataSourceImp implements AuthDataSource {
     return { success: true, data: { message: "Account created", user: runtimeUser, token: { access_token: token, token_type: "bearer", user: runtimeUser } } };
   }
   async getCurrentUser(): Promise<ApiResult<User>> { await mockDelay(100); return { success: true, data: user() }; }
-  async forgetPassword(_req: ForgetPassReq): Promise<ApiResult<string>> { await mockDelay(); return { success: true, data: "A reset link was sent to your email." }; }
-  async resetPassword(_req: ResetPasswordRequest): Promise<ApiResult<string>> { await mockDelay(); return { success: true, data: "Your password has been reset." }; }
+  async forgetPassword(): Promise<ApiResult<string>> { await mockDelay(); return { success: true, data: "A reset link was sent to your email." }; }
+  async resetPassword(): Promise<ApiResult<string>> { await mockDelay(); return { success: true, data: "Your password has been reset." }; }
 }

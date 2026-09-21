@@ -8,7 +8,8 @@ import { UrlResponse } from "../../domain/entity/url_response";
 import type { UrlRequest } from "../../domain/entity/url_request";
 
 export class MockUploadVideoDataSourceImp implements UploadVideoDataSource {
-  async uploadVideo(req: UploadVideoRequest, onProgress?: (percent: number) => void, signal?: AbortSignal, onVideoIdReceived?: (id: number) => void): Promise<ApiResult<ConfirmUploadResponse>> {
+  async uploadVideo(_req: UploadVideoRequest, onProgress?: (percent: number) => void, signal?: AbortSignal, onVideoIdReceived?: (id: number) => void): Promise<ApiResult<ConfirmUploadResponse>> {
+    void _req;
     const video = demoStore.createFromNextTemplate();
     onVideoIdReceived?.(video.id);
     for (const progress of [10, 35, 65, 100]) { if (signal?.aborted) return { success: true, data: { videoId: video.id, title: video.title, message: "Upload cancelled", processing_status: "cancelled" } }; onProgress?.(progress); await mockDelay(120); }

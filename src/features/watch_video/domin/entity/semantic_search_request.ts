@@ -3,6 +3,7 @@ export class SemanticSearchRequest {
   videoId: number;
 
   constructor(query: string, videoId: number) {
-    ((this.query = query), (this.videoId = videoId));
+    this.query = query;
+    this.videoId = videoId;
   }
 }

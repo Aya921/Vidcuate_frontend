@@ -24,7 +24,7 @@ export function useLinkHandlers() {
     try {
       const text = await navigator.clipboard.readText();
       setUrl(text);
-    } catch (error) {
+    } catch {
       setError(true);
     }
   };
