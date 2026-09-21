@@ -3,10 +3,12 @@ import { UploadVideoDataSourceImp } from "../../features/video_upload/api/data_s
 import { uploadVideoRepoImp } from "../../features/video_upload/data/repository/upload_video_repo_imp";
 import { DeleteVideoUseCase } from "../../features/video_upload/domain/usecase/delete_video_usecase";
 import { UploadUrlUseCase } from "../../features/video_upload/domain/usecase/upload_url_usecase";
+import { MockUploadVideoDataSourceImp } from "../../features/video_upload/api/data_source/mock_upload_video_data_source_imp";
+import { USE_MOCK_API } from "../mock/config";
 import { UploadVideoUseCase } from "../../features/video_upload/domain/usecase/upload_video_usecase";
 
 const uploadService = new UploadVideoService();
-const dataSource = new UploadVideoDataSourceImp(uploadService);
+const dataSource = USE_MOCK_API ? new MockUploadVideoDataSourceImp() : new UploadVideoDataSourceImp(uploadService);
 const repository = new uploadVideoRepoImp(dataSource);
 
 export const uploadVideoUseCase = new UploadVideoUseCase(repository);

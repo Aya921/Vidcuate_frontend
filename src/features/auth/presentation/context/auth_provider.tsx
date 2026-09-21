@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { authService } from "../../api/client/auth_service";
 import { AuthContext } from "./auth_context";
 
 import { SignupRequest } from "../../domain/entity/signup_request";
@@ -7,6 +6,7 @@ import { LoginRequest } from "../../domain/entity/login_request";
 import {
   loginUseCase,
   signupUseCase,
+  getCurrentUserUseCase,
 } from "../../../../core/di/auth_container";
 import type { ApiResult } from "../../../../core/api/apiResult";
 import type { LoginResponseDto } from "../../api/models/login/login_response_dto";
@@ -67,9 +67,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       localStorage.removeItem("token");
     }
 
-    setUser(loginData.user);
-    if (loginData.user.language_preference) {
-      setUserLocale(loginData.user.language_preference as Locale);
+    const authenticatedUser = loginData.user as unknown as User;
+    setUser(authenticatedUser);
+    if (authenticatedUser.language_preference) {
+      setUserLocale(authenticatedUser.language_preference as Locale);
     }
 
     return { success: true } as ApiResult<LoginResponseDto>;
@@ -89,14 +90,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     sessionStorage.setItem("token", signupData.token.access_token);
     localStorage.removeItem("token");
 
-    setUser(signupData.user);
+    setUser(signupData.user as unknown as User);
 
     return { success: true } as ApiResult<SignupResponseDto>;
   };
 
   const refreshUser = async () => {
-    const userData = await authService.getCurrentUser();
-    setUser(userData);
+    const result = await getCurrentUserUseCase.execute();
+    if (result.success) setUser(result.data);
   };
 
   const logout = () => {

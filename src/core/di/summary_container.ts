@@ -9,12 +9,16 @@ import { GetVideoStudyNotesUsecase } from "../../features/summarization/domain/u
 import { ExportDataSourceImp } from "../../features/summarization/api/data_source/export_data_source_imp";
 import { ExportRepoImp } from "../../features/summarization/data/repository/export_repo_imp";
 import { ExportUsecase } from "../../features/summarization/domain/usecase/export_usecase";
+import { MockSummaryDataSourceImp } from "../../features/summarization/api/data_source/mock_summary_data_source_imp";
+import { MockStudyNotesDataSourceImp } from "../../features/summarization/api/data_source/mock_study_notes_data_source_imp";
+import { USE_MOCK_API } from "../mock/config";
+import { MockExportDataSourceImp } from "../../features/summarization/api/data_source/mock_export_data_source_imp";
 
-const dataSource = new SummaryDataSourceImp();
+const dataSource = USE_MOCK_API ? new MockSummaryDataSourceImp() : new SummaryDataSourceImp();
 const repo = new SummaryRepoImp(dataSource);
-const studyNotesDataSource = new StudyNotesDataSourceImp();
+const studyNotesDataSource = USE_MOCK_API ? new MockStudyNotesDataSourceImp() : new StudyNotesDataSourceImp();
 const studyNotesRepo = new StudyNotesRepoImp(studyNotesDataSource);
-const exportDataSource = new ExportDataSourceImp();
+const exportDataSource = USE_MOCK_API ? new MockExportDataSourceImp() : new ExportDataSourceImp();
 const exportRepo = new ExportRepoImp(exportDataSource);
 export const exportUsecase = new ExportUsecase(exportRepo);
 export const getSegmentStudyNotesUsecase = new GetSegmentStudyNotesUsecase(

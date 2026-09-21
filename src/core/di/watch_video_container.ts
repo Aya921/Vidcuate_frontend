@@ -4,9 +4,11 @@ import { WatchVideoRepoImp } from "../../features/watch_video/data/repository/wa
 import { GetSearchResultUseCase } from "../../features/watch_video/domin/usecase/get_search_results";
 import { GetTopicsUseCase } from "../../features/watch_video/domin/usecase/get_topics";
 import { SaveVideoProgressUseCase } from "../../features/watch_video/domin/usecase/save_video_progress";
+import { MockWatchVideoDataSourceImp } from "../../features/watch_video/api/data_source/mock_watch_video_data_source_imp";
+import { USE_MOCK_API } from "../mock/config";
 
 const watchVideoService = new WatchVideoService();
-const dataSource = new WatchVideoDataSourceImp(watchVideoService);
+const dataSource = USE_MOCK_API ? new MockWatchVideoDataSourceImp() : new WatchVideoDataSourceImp(watchVideoService);
 const repository = new WatchVideoRepoImp(dataSource);
 
 export const getTopicsUseCase = new GetTopicsUseCase(repository);

@@ -5,9 +5,11 @@ import { DeleteSession } from "../../features/chat_bot/domain/usecase/delete_ses
 import { GetSessionMessages } from "../../features/chat_bot/domain/usecase/get_all_session_messages";
 import { GetAnswer } from "../../features/chat_bot/domain/usecase/get_answer";
 import { GetSessions } from "../../features/chat_bot/domain/usecase/get_sessions";
+import { MockChatBotDataSourceImp } from "../../features/chat_bot/api/data_source/mock_chat_bot_data_source_imp";
+import { USE_MOCK_API } from "../mock/config";
 
 const chatBotService = new ChatBotService();
-const dataSource = new ChatBotDataSourceImp(chatBotService);
+const dataSource = USE_MOCK_API ? new MockChatBotDataSourceImp() : new ChatBotDataSourceImp(chatBotService);
 const repository = new ChatBotRepoImp(dataSource);
 
 export const getAnswerCardUseCase = GetAnswer(repository);
