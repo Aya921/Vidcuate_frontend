@@ -1,14 +1,13 @@
 import type { ContinueLearningEntity } from "../../../domain/entity/continue_learning";
-import { formatTimeToHoursMinutes } from "../../utils/format_dashboard_times";
+import { formatVideoTime } from "../../utils/format_dashboard_times";
 import { useDashboard } from "../../hooks/use_dashboard";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 type CardDetailsProps = {
   cardData: ContinueLearningEntity;
 };
 
 export function CardDetails(props: CardDetailsProps) {
   const { handleSelectedVideo, handleOpenDeleteMessage } = useDashboard();
-  const intl = useIntl();
 
   return (
     <div className="p-4 ">
@@ -33,7 +32,7 @@ export function CardDetails(props: CardDetailsProps) {
               >
                 schedule
               </span>
-              {formatTimeToHoursMinutes(props.cardData.duration, intl)}
+              {formatVideoTime(props.cardData.duration)}
             </span>
           </div>
         )}
