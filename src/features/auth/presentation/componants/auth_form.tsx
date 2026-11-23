@@ -4,15 +4,12 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { CustomInput } from "../../../../core/componants/custom_input";
 import { CustomButton } from "../../../../core/componants/custum_btn";
 import { MainText } from "../../../../core/componants/text_section";
-import GoogleIcon from "../../../../assets/Images/Google.png";
 import { COLORS } from "../../../../core/constants/colors";
 import { FONT_STYLES } from "../../../../core/constants/fonts";
 import { AppRoutesNames as routes } from "../../../../app/routers/routes";
 import CustumBtnLoader from "../../../../core/componants/custum_btn_loader";
 import { CustumError } from "../../../../core/componants/custum_error";
 import { useAuthForm } from "../hooks/use_auth_form";
-import { Keys } from "../../../../core/constants/keys";
-
 type AuthFormProps = {
   type: "login" | "signup";
 };
@@ -35,10 +32,6 @@ export function AuthForm({ type }: AuthFormProps) {
   } = useAuthForm(isLogin);
 
   const formValues = watch();
-
-  const loginWithGoogle = () => {
-    window.location.href = Keys.google_url_key;
-  };
 
   const getFieldProps = (
     fieldName:
@@ -82,37 +75,6 @@ export function AuthForm({ type }: AuthFormProps) {
           id: isLogin ? "auth.loginSubtitle" : "auth.signupSubtitle",
         })}
       />
-
-      <button
-        type="button"
-        onClick={loginWithGoogle}
-        className="
-          flex w-full items-center justify-center gap-2
-          rounded-xl border-2 border-gray-200
-          py-2 px-3
-          text-sm
-          font-semibold
-          hover:bg-gray-50
-          transition
-          active:scale-95
-        "
-      >
-        <img src={GoogleIcon} alt="Google" className="w-5" />
-
-        <FormattedMessage
-          id={isLogin ? "auth.loginWithGoogle" : "auth.signupWithGoogle"}
-        />
-      </button>
-
-      <div className="relative flex items-center py-2">
-        <div className="flex-grow border-t border-gray-100"></div>
-
-        <span className="mx-3 md:mx-4 text-[10px] md:text-xs font-bold text-gray-400 uppercase">
-          <FormattedMessage id="auth.or" />
-        </span>
-
-        <div className="flex-grow border-t border-gray-100"></div>
-      </div>
 
       <form onSubmit={handleSubmit(handleProcess)} className="space-y-1">
         {!isLogin && (
