@@ -1,5 +1,6 @@
 import React from "react";
 import { useIntl, FormattedMessage } from "react-intl";
+import { CheckCircle } from "lucide-react";
 import AuthLayout from "../layouts/auth_layout";
 import { AuthForm } from "../componants/auth_form";
 import { RightSection } from "../componants/right_section";
@@ -26,7 +27,7 @@ const SignupPage: React.FC = () => {
           style={{ animationDuration: "3s" }}
         >
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-100 p-1.5 text-green-600">
-            <span className="material-symbols-outlined">check_circle</span>
+            <CheckCircle size={20} aria-hidden="true" />
           </div>
           <div>
             <p className="text-xs font-bold uppercase tracking-wider text-slate-500">
